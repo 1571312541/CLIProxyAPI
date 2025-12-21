@@ -2,8 +2,8 @@ name: Sync Fork
 
 on:
   schedule:
-    - cron: '0 */4 * * *'  # 每4小时同步一次
-  workflow_dispatch:  # 支持手动触发
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -13,6 +13,11 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Sync upstream
         run: |
